@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, InputGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../styles/Translator.css";
 import OpenAI from 'openai';
 
 const openai = new OpenAI({dangerouslyAllowBrowser:true,
@@ -82,7 +83,7 @@ const openai = new OpenAI({dangerouslyAllowBrowser:true,
 
           <Button onClick={handleTranslation} className="mb-3 w-100">Translate</Button>
 
-          <div className="translation-output mt-3">
+          <div className="translation-output mt-3 translated-text">
             {translatedText}
           </div>
         </Col>
