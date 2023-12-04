@@ -4,12 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({dangerouslyAllowBrowser:true,
-  apiKey: '' });
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY });
 
-const Translator = () => {
-  const [inputText, setInputText] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('french');
-  const [translatedText, setTranslatedText] = useState('');
+  const Translator = ({ selectedLanguage, setSelectedLanguage }) => {
+    const [inputText, setInputText] = useState('');
+    const [translatedText, setTranslatedText] = useState('');
 
   const handleTranslation = async () => {
     try {
