@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Form, Button, InputGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({dangerouslyAllowBrowser:true,
-  apiKey: process.env.OPENAI_API_KEY });
+  apiKey: '' });
 
 const Translator = () => {
   const [inputText, setInputText] = useState('');
@@ -23,13 +24,19 @@ const Translator = () => {
         case 'korean':
           promptLanguage = "Korean";
           break;
+          case 'english':
+          promptLanguage = "English";
+          break;
+          case 'minionese':
+            promptLanguage = "Minionese";
+            break;
         default:
           promptLanguage = "French";
       }
 
       const completion = await openai.chat.completions.create({
         messages: [
-          { "role": "system", "content": "You are a helpful assistant." },
+          { "role": "system", "content": "You are a helpful, extremely smart polyglot." },
           { "role": "user", "content": `Translate this to ${promptLanguage}: ${inputText}` }
         ],
         model: "gpt-3.5-turbo",
@@ -44,36 +51,44 @@ const Translator = () => {
   };
 
   return (
-    <div>
-      <InputGroup className="mb-3">
-        <FormControl
-          placeholder="Enter text"
-          aria-label="Text input"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-      </InputGroup>
+    <Container className="p-4">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Enter text"
+              aria-label="Text input"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+          </InputGroup>
 
-      <Form>
-        {['french', 'spanish', 'korean'].map((lang) => (
-          <Form.Check 
-            key={lang}
-            type="radio"
-            label={lang.charAt(0).toUpperCase() + lang.slice(1)}
-            name="languageOptions"
-            id={`radio-${lang}`}
-            onChange={() => setSelectedLanguage(lang)}
-            checked={selectedLanguage === lang}
-          />
-        ))}
-      </Form>
+          <Form>
+            <div className="mb-3">
+              {['french', 'spanish', 'korean', 'english', 'minionese'].map((lang) => (
+                <Form.Check 
+                  key={lang}
+                  inline
+                  className="me-3"
+                  type="radio"
+                  label={lang.charAt(0).toUpperCase() + lang.slice(1)}
+                  name="languageOptions"
+                  id={`radio-${lang}`}
+                  onChange={() => setSelectedLanguage(lang)}
+                  checked={selectedLanguage === lang}
+                />
+              ))}
+            </div>
+          </Form>
 
-      <Button onClick={handleTranslation} className="mt-3">Translate</Button>
+          <Button onClick={handleTranslation} className="mb-3 w-100">Translate</Button>
 
-      <div className="translation-output mt-3">
-        {translatedText}
-      </div>
-    </div>
+          <div className="translation-output mt-3">
+            {translatedText}
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
