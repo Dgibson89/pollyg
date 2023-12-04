@@ -8,7 +8,7 @@ const openai = new OpenAI({dangerouslyAllowBrowser:true,
   apiKey: process.env.REACT_APP_OPENAI_API_KEY });
 
   const Translator = ({ selectedLanguage, setSelectedLanguage }) => {
-    const [inputText, setInputText] = useState('');
+    const [inputText, setInputText] = useState('Welcome to my translator! Try me out!');
     const [translatedText, setTranslatedText] = useState('');
 
   const handleTranslation = async () => {
