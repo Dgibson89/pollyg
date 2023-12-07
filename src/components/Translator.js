@@ -40,6 +40,8 @@ const openai = new OpenAI({dangerouslyAllowBrowser:true,
           { "role": "user", "content": `Translate this to ${promptLanguage}: ${inputText}` }
         ],
         model: "gpt-3.5-turbo",
+        temperature: 1,
+        max_tokens: 255,
       });
 
       const translatedText = completion.choices[0].message.content;
